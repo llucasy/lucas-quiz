@@ -1,5 +1,6 @@
 <script lang="ts">
-  import src from '$lib/assets/quiz.svg';
+  import src from '$lib/assets/quiz.svg'
+  import { userName } from '$lib/stores/userStore'
 </script>
 
 <svelte:head>
@@ -13,18 +14,20 @@
     <h2 class="mb-4 text-4xl font-bold">Perguntas e Respostas</h2>
     <p class="mb-4 text-[#8435de]">Escolha um nome abaixo para começar:</p>
     <div class="flex gap-6">
-      <a href="/stella">
+      <a href="/subjects">
         <button
           type="button"
           class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          onclick={() => $userName = 'stella'}
         >
           Stella
         </button>
       </a>
-      <a href="/stefany">
+      <a href="/subjects">
         <button
           type="button"
           class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          onclick={() => $userName = 'stefany'}
         >
           Stefany
         </button>
