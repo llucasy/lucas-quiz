@@ -1,11 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import src from '$lib/assets/quiz.svg';
+  import src from '$lib/assets/quiz.svg'
 
   const { name }: { name: string } = $props()
-  let subjects: [{ subject: string }] = $state([{ subject: '' }])
 
-  onMount(async () => {
+  const getSubjects: () => Promise<[{ subject: string }]> = async () => {
     const response = await fetch('/api/subject', {
       method: 'POST',
       body: JSON.stringify({ author: name }),
@@ -13,9 +12,8 @@
         'content-type': 'application/json',
       },
     })
-
-    subjects = await response.json()
-  })
+    return await response.json()
+  }
 </script>
 
 <div class="flex max-w-[500px] flex-col items-center justify-center">
@@ -24,14 +22,25 @@
   </h2>
   <p class="mb-4 text-[#8435de]">Clique no botão abaixo para começar:</p>
   <div class="flex gap-6">
-    {#each subjects as subject}
+    {#await getSubjects()}
       <button
         type="button"
         class="mb-5 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
       >
-        {subject.subject}
+        Carregando...
       </button>
-    {/each}
+    {:then subjects}
+      {#if subjects.length > 1}
+        {#each subjects as subject}
+          <button
+            type="button"
+            class="mb-5 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          >
+            {subject.subject}
+          </button>
+        {/each}
+      {/if}
+    {/await}
   </div>
   <button
     type="button"
