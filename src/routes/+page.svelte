@@ -17,8 +17,8 @@
       <a href="/subjects">
         <button
           type="button"
-          class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-          onclick={() => $userName = 'stella'}
+          class="bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          onclick={() => ($userName = 'stella')}
         >
           Stella
         </button>
@@ -26,8 +26,8 @@
       <a href="/subjects">
         <button
           type="button"
-          class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-          onclick={() => $userName = 'stefany'}
+          class="bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          onclick={() => ($userName = 'stefany')}
         >
           Stefany
         </button>
@@ -36,3 +36,9 @@
     <img class="mt-8" {src} alt="Inicio do Quiz" />
   </div>
 </main>
+
+<style lang="postcss">
+  button {
+    @apply cursor-pointer rounded border-none bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 text-xl font-bold outline hover:scale-105 hover:from-purple-500 hover:to-blue-500 hover:shadow-2xl hover:shadow-blue-500/50;
+  }
+</style>

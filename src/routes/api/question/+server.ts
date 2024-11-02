@@ -6,24 +6,22 @@ export const POST: RequestHandler = async ({ request }) => {
   const { author } = await request.json()
 
   try {
-    const subjects = await prisma.question.findMany({
-        where: {
-            author: {
-              name: {
-                equals: String(author),
-              },
-            },
+    const questions = await prisma.question.findMany({
+      where: {
+        author: {
+          name: {
+            equals: String(author),
           },
-          select: {
-            subject: true
-          },
-          distinct: ['subject'],
+        },
+      },
+      include: {
+        options: true,
+      },
     })
 
-    return json(subjects, { status: 200 })
+    return json(questions, { status: 200 })
   } catch (error) {
     console.log(error)
     return json({ error }, { status: 500 })
   }
 }
- 
