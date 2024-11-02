@@ -8,6 +8,7 @@
 </script>
 
 <button
+  type="button"
   onclick={() => selectOption()}
   class={'!mb-4 !transform !cursor-pointer !rounded-lg !bg-[#3c0e70] !p-4 !opacity-80 !transition duration-300 ease-in-out hover:scale-110 hover:opacity-100 ' +
     ($quizStore.answerSelected && option === answer ? correctCSS : '') +

@@ -1,8 +1,10 @@
 <script lang="ts">
   import Option from '$lib/components/Option.svelte'
   import {
+    changeQuestion,
     changeState,
     checkAnswer,
+    newGame,
     quizStore,
     reorderQuestions,
     setQuestions,
@@ -21,7 +23,7 @@
     return await response.json()
   }
 
-  const currentQuestion = $quizStore.questions[$quizStore.currentQuestion]
+  $: currentQuestion = $quizStore.questions[$quizStore.currentQuestion]
 
   const onSelectOption = (option: { id: string; text: string; questionId: string }) => {
     checkAnswer(option, currentQuestion.answer)
@@ -35,8 +37,9 @@
 
 <main class="flex flex-col items-center justify-center pt-12 text-center">
   {#await getQuestions()}
-    Carregando...
+    Carregando jogo para {$userName}...
   {:then questions}
+    {newGame()}
     {setQuestions(questions)}
     {changeState()}
     {reorderQuestions()}
@@ -45,11 +48,30 @@
         Pergunta {$quizStore.currentQuestion + 1} de {$quizStore.questions.length} - Score: {$quizStore.score}
       </p>
       <h2 class="my-4">{currentQuestion.question}</h2>
-      <div>
+      <div class="flex flex-col">
         {#each currentQuestion.options as option}
-          <Option option={option.text} selectOption={() => onSelectOption(option)} answer={currentQuestion.answer} />
+          <Option
+            option={option.text}
+            selectOption={() => onSelectOption(option)}
+            answer={currentQuestion.answer}
+          />
         {/each}
       </div>
+      {#if $quizStore.answerSelected}
+        <button
+          type="button"
+          onclick={() => changeQuestion()}
+          class="mb-5 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        >
+          Continuar
+        </button>
+      {/if}
     </div>
   {/await}
 </main>
+
+<style lang="postcss">
+  button {
+    @apply cursor-pointer rounded border-none bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 text-xl font-bold outline hover:scale-105 hover:from-purple-500 hover:to-blue-500 hover:shadow-2xl hover:shadow-blue-500/50;
+  }
+</style>
