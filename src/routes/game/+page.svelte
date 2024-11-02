@@ -37,7 +37,7 @@
 
 <main class="flex flex-col items-center justify-center pt-12 text-center">
   {#await getQuestions()}
-    Carregando jogo para {$userName}...
+    <p>Carregando jogo para <span class="capitalize">{$userName}</span>...</p>
   {:then questions}
     {newGame()}
     {setQuestions(questions)}
