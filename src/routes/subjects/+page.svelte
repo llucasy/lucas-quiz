@@ -16,16 +16,16 @@
 
 <main class="flex flex-col items-center justify-center pt-12 text-center">
   <h1 class="mb-8 text-3xl font-bold underline">Lucas Quiz</h1>
-  <div class="flex max-w-[500px] flex-col items-center justify-center">
+  <div class="flex max-w-[600px] flex-col items-center justify-center">
     <h2 class="mb-4 text-4xl font-bold">
       Seja bem-vinda, <span class="capitalize text-purple-500">{$userName}</span>!
     </h2>
     <p class="mb-4 text-[#8435de]">Clique no botão abaixo para começar:</p>
-    <div class="flex gap-6">
+    <div class="flex flex-wrap gap-6 px-6 mb-5 justify-center">
       {#await getSubjects()}
         <button
           type="button"
-          class="mb-5 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         >
           Carregando...
         </button>
@@ -34,7 +34,7 @@
           {#each subjects as subject}
             <button
               type="button"
-              class="mb-5 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+              class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
             >
               {subject.subject}
             </button>
