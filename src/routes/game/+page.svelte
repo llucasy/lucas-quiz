@@ -10,13 +10,13 @@
     reorderQuestions,
     setQuestions,
   } from '$lib/stores/gameStore'
-  import { userName } from '$lib/stores/userStore'
+  import { userSubjects, userName } from '$lib/stores/userStore'
   import type { Question } from '$lib/types'
 
   const getQuestions: () => Promise<Question[]> = async () => {
     const response = await fetch('/api/question', {
       method: 'POST',
-      body: JSON.stringify({ author: $userName }),
+      body: JSON.stringify({ author: $userName, subjects: $userSubjects }),
       headers: {
         'content-type': 'application/json',
       },

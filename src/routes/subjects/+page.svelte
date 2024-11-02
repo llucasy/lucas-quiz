@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userName } from '$lib/stores/userStore'
+  import { userSubjects, userName } from '$lib/stores/userStore'
   import src from '$lib/assets/quiz.svg'
 
   const getSubjects: () => Promise<[{ subject: string }]> = async () => {
@@ -21,7 +21,7 @@
       Seja bem-vinda, <span class="capitalize text-purple-500">{$userName}</span>!
     </h2>
     <p class="mb-4 text-[#8435de]">Clique no botão abaixo para começar:</p>
-    <div class="flex flex-wrap gap-6 px-6 mb-5 justify-center">
+    <div class="mb-5 flex flex-wrap justify-center gap-6 px-6">
       {#await getSubjects()}
         <button
           type="button"
@@ -32,18 +32,22 @@
       {:then subjects}
         {#if subjects.length > 1}
           {#each subjects as subject}
-            <button
-              type="button"
-              class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-            >
-              {subject.subject}
-            </button>
+            <a href="/game">
+              <button
+                onclick={() => $userSubjects = [subject.subject]}
+                type="button"
+                class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+              >
+                {subject.subject}
+              </button>
+            </a>
           {/each}
         {/if}
       {/await}
     </div>
     <a href="/game">
       <button
+        onclick={() => $userSubjects = ['']}
         type="button"
         class="mt-1 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
       >
