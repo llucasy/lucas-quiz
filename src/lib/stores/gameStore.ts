@@ -73,7 +73,7 @@ export const changeQuestion = () => {
 }
 
 export const newGame = () => {
-  quizStore.set({ ...initialState })
+  quizStore.set({ ...initialState, gameStage: STAGES[1] })
 }
 
 export const checkAnswer = (option: { text: string }, answer: string) => {

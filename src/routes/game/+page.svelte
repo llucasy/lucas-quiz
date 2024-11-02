@@ -1,4 +1,5 @@
 <script lang="ts">
+  import GameOver from '$lib/components/GameOver.svelte'
   import Option from '$lib/components/Option.svelte'
   import {
     changeQuestion,
@@ -28,6 +29,9 @@
   const onSelectOption = (option: { id: string; text: string; questionId: string }) => {
     checkAnswer(option, currentQuestion.answer)
   }
+
+  newGame()
+  changeState()
 </script>
 
 <svelte:head>
@@ -36,38 +40,40 @@
 </svelte:head>
 
 <main class="flex flex-col items-center justify-center pt-12 text-center">
-  {#await getQuestions()}
-    <p>Carregando jogo para <span class="capitalize">{$userName}</span>...</p>
-  {:then questions}
-    {newGame()}
-    {setQuestions(questions)}
-    {changeState()}
-    {reorderQuestions()}
-    <div class="max-w-lg rounded-2xl bg-[#8435de] p-3 text-center">
-      <p>
-        Pergunta {$quizStore.currentQuestion + 1} de {$quizStore.questions.length} - Score: {$quizStore.score}
-      </p>
-      <h2 class="my-4">{currentQuestion?.question}</h2>
-      <div class="flex flex-col">
-        {#each currentQuestion?.options as option}
-          <Option
-            option={option.text}
-            selectOption={() => onSelectOption(option)}
-            answer={currentQuestion.answer}
-          />
-        {/each}
+  {#if $quizStore.gameStage === 'Playing'}
+    {#await getQuestions()}
+      <p>Carregando jogo para <span class="capitalize">{$userName}</span>...</p>
+    {:then questions}
+      {setQuestions(questions)}
+      {reorderQuestions()}
+      <div class="max-w-lg rounded-2xl bg-[#8435de] p-3 text-center">
+        <p>
+          Pergunta {$quizStore.currentQuestion + 1} de {$quizStore.questions.length} - Score: {$quizStore.score}
+        </p>
+        <h2 class="my-4">{currentQuestion?.question}</h2>
+        <div class="flex flex-col">
+          {#each currentQuestion?.options as option}
+            <Option
+              option={option.text}
+              selectOption={() => onSelectOption(option)}
+              answer={currentQuestion.answer}
+            />
+          {/each}
+        </div>
+        {#if $quizStore.answerSelected}
+          <button
+            type="button"
+            onclick={() => changeQuestion()}
+            class="mb-5 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          >
+            Continuar
+          </button>
+        {/if}
       </div>
-      {#if $quizStore.answerSelected}
-        <button
-          type="button"
-          onclick={() => changeQuestion()}
-          class="mb-5 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-        >
-          Continuar
-        </button>
-      {/if}
-    </div>
-  {/await}
+    {/await}
+  {:else if $quizStore.gameStage === 'End'}
+    <GameOver />
+  {/if}
 </main>
 
 <style lang="postcss">
