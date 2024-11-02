@@ -47,9 +47,9 @@
       <p>
         Pergunta {$quizStore.currentQuestion + 1} de {$quizStore.questions.length} - Score: {$quizStore.score}
       </p>
-      <h2 class="my-4">{currentQuestion.question}</h2>
+      <h2 class="my-4">{currentQuestion?.question}</h2>
       <div class="flex flex-col">
-        {#each currentQuestion.options as option}
+        {#each currentQuestion?.options as option}
           <Option
             option={option.text}
             selectOption={() => onSelectOption(option)}
