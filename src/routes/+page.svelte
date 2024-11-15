@@ -4,12 +4,12 @@
 </script>
 
 <svelte:head>
-  <title>Lucas - Quiz</title>
+  <title>Quiz - Lucas</title>
   <meta name="description" content="Quiz criado pelo Lucas" />
 </svelte:head>
 
 <main class="flex flex-col items-center justify-center pt-12 text-center">
-  <h1 class="mb-8 text-3xl font-bold underline">Lucas Quiz</h1>
+  <h1 class="mb-8 text-3xl font-bold underline">Quiz Lucas</h1>
   <div class="flex max-w-[500px] flex-col items-center justify-center">
     <h2 class="mb-4 text-4xl font-bold">Perguntas e Respostas</h2>
     <p class="mb-4 text-[#8435de]">Escolha um nome abaixo para começar:</p>
